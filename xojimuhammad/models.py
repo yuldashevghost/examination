@@ -1,28 +1,29 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth.models import User
 from django.urls import reverse
 
 
-class AbtractBaseModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-
-
-class User(AbstractUser):
-    GENDER_CHOICE = [
-        ('m', 'Male'),
-        ('f', 'Female'),
-    ]
-
-    age = models.IntegerField(null=True)
-    address = models.TextField(null=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICE, null=True)
-
-    class Meta:
-        verbose_name_plural = "Users"
+class UserProfile(models.Model):
+    username = models.CharField(max_length=50)
+    email = models.EmailField()
+    password = models.CharField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.username
+
+
+
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=255)
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    body = models.TextField()
+
+    def __str__(self):
+        return self.title + ' | ' + str(self.author)
+
+    def get_absolute_url(self):
+        return reverse('xojimuhammad:home')
+

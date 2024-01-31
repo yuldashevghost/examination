@@ -1,48 +1,93 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 
-from xojimuhammad.forms import UserRegisterModelForm
+from xojimuhammad.forms import RegistrationForm, LoginForm
+
+from django.contrib.auth import authenticate, login
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+from xojimuhammad.models import Post
+from .forms import PostForm
 
 
 # Create your views here.
-def home_page(request):
-    return render(request, 'home.html')
+# def home_page(request):
+#     return render(request, 'home.html')
+
+class HomeView(ListView):
+    model = Post
+    template_name = 'home.html'
+
+class ArticleDetailView(DetailView):
+    model = Post
+    template_name = 'post_detail.html'
+
+class AddPost(CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'post_form.html'
+    # fields = "__all__"
+
+
+class UpdatePostView(UpdateView):
+    model = Post
+    # form_class = PostForm
+    template_name = 'update_post.html'
+    fields = ['title', 'body']
+    success_url = reverse_lazy('xojimuhammad:home')
+
+class DeletePostView(DeleteView):
+    model = Post
+    template_name = 'post_confirm_delete.html'
+    success_url = reverse_lazy('xojimuhammad:home')
+
 
 def about_page(request):
     return render(request, 'about.html')
 
-def post_coniform_delete(request):
-    return render(request, 'post_confirm_delete.html')
 
-def post_detail(request):
-    return render(request, 'post_detail.html')
-
-def post_form(requset):
-    return render(requset, 'post_form.html')
 
 def user_post(requset):
     return render(requset, 'user_posts.html')
 
-def login_page(request):
-    return render(request, 'login.html')
+
 
 def logout_page(request):
     return render(request, 'logout.html')
 
+
+
 def register_page(request):
-
-    if request.method == 'GET':
-        form = UserRegisterModelForm()
-        return render(request, "register.html", {"form": form})
-
-    elif request.method == 'POST':
-        form = UserRegisterModelForm(data=request.POST)
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
         if form.is_valid():
-            messages.success(request, "User successfully registered")
             form.save()
-            return redirect("bookshop:login")
-        else:
-            return render(request, "register.html", {"form": form})
+            return redirect('xojimuhammad:login_page')
+    else:
+        form = RegistrationForm()
 
-    return render(request, 'register.html')
+    return render(request, 'register.html', {'form': form})
+
+
+
+
+
+def login_page(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('xojimuhammad:home')
+            else:
+
+                pass
+    else:
+        form = LoginForm()
+
+    return render(request, 'login.html', {'form': form})
 

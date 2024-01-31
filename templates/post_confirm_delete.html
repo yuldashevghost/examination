@@ -46,6 +46,8 @@
               </div>
                 <div class="content-section">
                     <form method="POST">
+                        {% csrf_token %}
+                        
                         <fieldset class="form-group">
                             <legend class="border-bottom mb-4">Delete Post</legend>
                             <h2>Are you sure you want to delete the post "I have been watching a decade."</h2>

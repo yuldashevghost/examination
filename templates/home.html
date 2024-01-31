@@ -44,26 +44,22 @@
               <div class="alert alert-{{ message.tags }}">
                 <h6>Django messages might be shown here</h3>
               </div>
+            
+            {% for post in object_list %}
               <article class="media content-section">
                 <img class="rounded-circle article-img" src="{% static 'imgs/corey.jpeg' %}">
                 <div class="media-body">
                   <div class="article-metadata">
-                    <a class="mr-2" href="{% url 'xojimuhammad:user_post' %}">Jordan Gibbs</a>
+                    <a class="mr-2" href="{% url 'xojimuhammad:user_post' %}">{{ post.author }}</a>
                     <small class="text-muted">Feb 19, 2023</small>
                   </div>
-                  <h5><a class="article-title" href="{% url 'xojimuhammad:post_detail' %}">I have been watching a decade.</a></h2>
+                  <h5><a class="article-title" href="{% url 'xojimuhammad:post_detail' post.pk %}">{{ post.title }}</a></h2>
                 </div>
               </article>
-              <article class="media content-section">
-                <img class="rounded-circle article-img" src="{% static 'imgs/gibbs.jpeg' %}">
-                <div class="media-body">
-                  <div class="article-metadata">
-                    <a class="mr-2" href="{% url 'xojimuhammad:user_post' %}">Jordan Gibbs </a>
-                    <small class="text-muted">Feb 19, 2023</small>
-                  </div>
-                  <h5><a class="article-title" href="{% url 'xojimuhammad:post_detail' %}">Do Gimmicky ChatGPT Prompts Actually Work?</a></h2>
-                </div>
-              </article>
+            
+            {% endfor %}
+            
+              
         </div>
         <div class="col-md-4">
           <div class="content-section">

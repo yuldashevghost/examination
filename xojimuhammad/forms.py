@@ -1,24 +1,28 @@
+# registration/forms.py
 from django import forms
-from django.core.exceptions import ValidationError
-from django.forms import ModelForm
+from .models import UserProfile, Post
 
-from xojimuhammad.models import Post
-
-
-class UserRegisterModelForm(forms.ModelForm):
-    password1 = forms.CharField(max_length=128)
-    password2 = forms.CharField(max_length=128)
-
-    def save(self, commit=True):
-        password1 = self.cleaned_data["password1"]
-        password2 = self.cleaned_data["password2"]
-        if password1==password2:
-            user = super().save(commit)
-            user.set_password(password1)
-            user.save()
-        else:
-            raise ValidationError("Passwords must match")
-
+class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["username",  "email", "first_name", "last_name", "password1", "password2"]
+        fields = ['title', 'body', 'author']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'body': forms.Textarea(attrs={'class': 'form-control'}),
+            'author': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+
+class RegistrationForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'email', 'password']
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
+
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput())

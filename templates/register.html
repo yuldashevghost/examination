@@ -1,11 +1,15 @@
-{% extends 'home.html' %}
-{% block title %} Author Register Page{% endblock %}
-{% block body %}
-    <h1>Registration Page</h1>
-    <h3>Already have an <a href="{% url 'xojimuhammad:home' %}">account </a></h3>
-    <form method="post">
+<!-- registration/templates/registration/register.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+</head>
+<body>
+    <h2>User Registration</h2>
+    <form method="post" action="{% url 'xojimuhammad:register_page' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit"> Register</button>
+        <button type="submit">Register</button>
     </form>
-{% endblock %}
+</body>
+</html>
