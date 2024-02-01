@@ -23,6 +23,7 @@ from examination import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('xojimuhammad.urls')),
+    path('members/', include('django.contrib.auth.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

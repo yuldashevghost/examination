@@ -4,12 +4,12 @@
 <h1>Update Post</h1>
     <br><br>
 <div class="form-group">
-    <from method="POST">
+    <from method="POST" action="{% url 'xojimuhammad:post_detail' post.pk %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <div class="form-group">
-            <button class="btn btn-secondary" type="submit">Post</button>   
-        </div>
+        
+        <button class="btn btn-secondary" type="submit">Post</button>   
+        
     </from>
 </div>
 

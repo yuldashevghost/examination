@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% block title %} Log out page{% endblock %}
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        Are You Sure Log out
+        <a>
+            <button type="submit">Yes</button>
+        </a>
 
-</body>
-</html>
+    </form>
+     <a href="{% url 'xojimuhammad:home' %}">
+            <button> No</button>
+        </a>
+{% endblock %}

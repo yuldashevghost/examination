@@ -30,9 +30,9 @@
             <div class="navbar-nav">
                 <a class="nav-item nav-link" href="{% url 'xojimuhammad:post_form' %}">New Post</a>
                 <a class="nav-item nav-link" href="{% url 'xojimuhammad:user_post' %}">Profile</a>
-                <a class="nav-item nav-link" href="#">Logout</a>
-                <a class="nav-item nav-link" href="{% url 'xojimuhammad:login_page' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'xojimuhammad:register_page' %}">Register</a>
+                <a class="nav-item nav-link" href="{% url 'xojimuhammad:logout' %}">Logout</a>
+                <a class="nav-item nav-link" href="{% url 'xojimuhammad:login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'xojimuhammad:register' %}">Register</a>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@
                   <a class="mr-2" href="{% url 'xojimuhammad:user_post' %}">Andrew Ng</a>
                   <small class="text-muted">Aug 21, 2019</small>
                 </div>
-                <h4><a class="article-title" href="{% url 'xojimuhammad:post_detail' %}">Introducing the AI Transformation Playbook</a></h2>
+                <h4><a class="article-title" href="{% url 'xojimuhammad:post_detail' post.pk %}">Introducing the AI Transformation Playbook</a></h2>
                 <p class="article-content">Dear friends,
                   I’m excited to share with you the AI Transformation Playbook. Drawn from my experience leading Google Brain, 
                   Baidu’s AI Group, and Landing AI, this Playbook provides a roadmap for your company to transform into a great AI company.</p>
